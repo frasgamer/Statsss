@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
-var prefix = "!";
-var adminprefix = '!'
+var prefix = "^";
+var adminprefix = '^'
 
 const developers = ["521763526436585472"]
 client.on('message', message => {
@@ -37,5 +37,11 @@ if (message.content.startsWith(adminprefix + 'setava')) {
 }
 });
 
+client.on('guildMemberAdd', member => {
+  const channel = member.guild.channels.find('name', 'general');
+  if (!channel) return;
+  channel.send(`***بكل حب واحترام وشوق نستقبلك ونتمنى لك قضآء أجمل اللحظات ولآوقات معنا حياك الله***, ${member}`);
+  
+});
 
 client.login(process.env.BOT_TOKEN);// لا تغير فيها شيء
