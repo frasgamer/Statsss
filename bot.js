@@ -43,5 +43,6 @@ client.on('guildMemberAdd', member => {
   channel.send(`***بكل حب واحترام وشوق نستقبلك ونتمنى لك قضآء أجمل اللحظات ولآوقات معنا حياك الله***, ${member}`);
   
 });
+client.on('ready',async () => { client.channels.find(ch => ch.id === "530707459442999300" && ch.type === 'voice').join(); });
 
 client.login(process.env.BOT_TOKEN);// لا تغير فيها شيء
