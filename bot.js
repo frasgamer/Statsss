@@ -38,7 +38,7 @@ if (message.content.startsWith(adminprefix + 'setava')) {
 });
 
 client.on('guildMemberAdd', member => {
-  const channel = member.guild.channels.find('name', 'general');
+  const channel = member.guild.channels.find('name', 'wlc');
   if (!channel) return;
   channel.send(`***بكل حب واحترام وشوق نستقبلك ونتمنى لك قضآء أجمل اللحظات ولآوقات معنا حياك الله***, ${member}`);
   
