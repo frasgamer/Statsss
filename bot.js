@@ -299,5 +299,5 @@ ${message.author.tag} تمت معاقبتك بواسطة
 		.setColor("RANDOM")
 	user.send( muteembeddm);
   }
-
+});
 client.login(process.env.BOT_TOKEN);// لا تغير فيها شيء
