@@ -312,116 +312,21 @@ message.guild.member(user).kick();
 }
 });
 
-
 client.on('message', message => {
-    if (message.content.startsWith("^mute")) {
-     
+let args = message.content.split(' ').slice(1).join(' ');
+if (message.content.startsWith('^bc')){
 
-        if (!message.member.hasPermission('MUTE_MEMBERS')) {
-            message.channel.send(':lock: **I** need `MANAGE_ROLES` Permissions to execute `mute`');
-            return;
-        }
+ if(message.channel.type === "dm") return;
 
-        if (!message.guild.member(client.user).hasPermission('MANAGE_ROLES')) {
-            return message.reply(':lock: **I** need `MANAGE_ROLES` Permissions to execute `mute`')
-        }
-        const msmute = require('ms');
-        let reasonMute = message.content.split(' ').slice(3).join(' ');
-        let timeMute = message.content.split(' ')[2];
-        let guildMute = message.guild;
-      // Let adminRoleMute = guild.roles.find("name", "TOA");
-        let memberMute = message.guild.member;
-        let userMute = message.mentions.users.first();
-        let muteRoleMute = client.guilds.get(message.guild.id).roles.find('name', 'muted');
-   
 
-        if (!muteRoleMute) {
-            return message.reply('`Please create a role called "muted"`');
-        }
+client.users.forEach(m =>{
+m.sendMessage(args)
+message.delete();
+})
+}
 
-        if (message.mentions.users.size < 1) {
-            return message.reply('You need to mention someone to Mute him!.');
-        }
-        if (message.author.id === userMute.id) {
-            return message.reply('You cant punish yourself :wink:');
-        }
-        if (!timeMute) {
-            return message.reply('specify the time for the mute!**Usage:**`~mute [@mention] [1m] [reason]`');
-        }
-        if (!timeMute.match(/[1-60][s,m,h,d,w]/g)) {
-            return message.reply('I need a valid time ! look at the Usage! right here: **Usage:**`~mute [@mention] [1m] [reason]`');
-        }
-        if (!reasonMute) {
-            return message.reply('You must give me a reason for Mute **Usage:**`~mute [@mention] [15m] [reason]`');
-        }
-        if (reasonMute.time < 1) {
-            return message.reply('TIME?').then(message => message.delete(2000));
-        }
-        if (reasonMute.length < 1) {
-            return message.reply('You must give me a reason for Mute');
-        }
-        message.guild.member(userMute).addRole(muteRoleMute)
-
-        setTimeout(() => {
-            message.guild.member(userMute).removeRole(muteRoleMute)
-        }, msmute(timeMute));
-        message.guild.channels.filter(textchannel => textchannel.type === 'text').forEach(cnl => {
-            cnl.overwritePermissions(muteRoleMute, {
-                SEND_MESSAGES: false
-            });
-        });
-
-        message.reply("This user has been muted.");
-
-       message.channel.send({embed: {
-            color: 16745560,
-            author: {
-              name: client.user.username,
-              icon_url: client.user.avatarURL
-            },
-            fields: [{
-                name: 'Mute',
-                value: `**Muted:**${userMute.username}#${userMute.discriminator}\n**Moderator:** ${message.author.username}\n**Duration:** ${msmute(msmute(timeMute), {long: true})}\n**Reason:** ${reasonMute}`
-              }
-            ],
-            timestamp: new Date(),
-            footer: {
-              icon_url: client.user.avatarURL,
-              text: "Â©  Toxic Shop "
-            }
-          }
-        });
-
-    
-    
-    
-    
-//â•±â•±â•±â•±â•±â•±â•±â•±â•±â•±â•±â•±â•­â•®â•±â•±â•±â•±â•±â•±â•±â•±â•±â•±â•±â•±â•±â•±â•±â•­â•®
-//â•±â•±â•±â•±â•±â•±â•±â•±â•±â•±â•±â•­â•¯â•°â•®â•±â•±â•±â•±â•±â•±â•±â•±â•±â•±â•±â•±â•±â•±â”ƒâ”ƒ
-//â•­â•®â•­â”³â”â•®â•­â•®â•­â”³â•®â”£â•®â•­â•‹â”â”â•®â•­â”â”â”³â•®â•­â”³â”â•®â•­â”â•¯â”ƒ
-//â”ƒâ”ƒâ”ƒâ”ƒâ•­â•®â”«â•°â•¯â”ƒâ”ƒâ
-    if (message.content.startsWith("^unmute")) {
-    
-
-        let guildUnmute = message.guild;
-        let argsUnmute = message.content.split(' ').slice(1);
-      
-        if (!message.guild.member(message.author).hasPermission('MANAGE_ROLES')) {
-            return message.reply(':lock: **I** need `MANAGE_ROLES` Permissions to execute `mute`')
-        }
-        if (!message.guild.member(client.user).hasPermission('MANAGE_ROLES')) {
-            return message.reply(':lock: **I** need `MANAGE_ROLES` Permissions to execute `mute`')
-        }
-        let userUnmute = message.mentions.users.first();
-        let muteRoleUnmute = client.guilds.get(message.guild.id).roles.find('name', 'muted');
-        if (message.mentions.users.size < 1) {
-            return message.reply('You need to mention someone to unmute him!.');
-        }
-        message.guild.member(userUnmute).removeRole(muteRoleUnmute).then(() => {
-            message.reply(`You've succesfully unmuted ${userUnmute}`);
-        });
-    }
 });
+
 
 
 
