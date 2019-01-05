@@ -1,7 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const { Client, Util } = require('discord.js');
-const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
 var prefix = "^";
 var adminprefix = '^'
