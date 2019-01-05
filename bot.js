@@ -328,6 +328,25 @@ message.delete();
 });
 
 
+client.on('message', message => {
+        
+   if(message.content.startsWith(prefix + 'rename')) {
+if(message.member.hasPermission("ADMINISTRATOR")) {
+         let args = message.content.split(' ').slice(2);
+var mentionned = message.mentions.users.first();
+   
+  if(!args){
+    return message.channel.send(":x: " + `**| Please enter a new Nick for ${mentionned}**`);
+  }
+  if (!mentionned)return message.channel.send("**You Have to Mention A member :x:**")
+  message.guild.member(mentionned).setNickname(args.join(" ")).then(user => message.channel.send(`:full_moon_with_face: ${mentionned}'s' **New NickName is **` + `__${args.join(" ")}__` + "!")).catch(console.error);
+} else {
+  return message.reply(":x: " + "| You need to have the \"ADMINISTRATOR\" Permission");
+  }
+
+
+    }
+});
 
 
 client.login(process.env.BOT_TOKEN);// لا تغير فيها شيء
