@@ -4,6 +4,8 @@ const { Client, Util } = require('discord.js');
 const ytdl = require('ytdl-core');
 var prefix = "^";
 var adminprefix = '^'
+var profile = require("./profile.js");
+profile.get("chalkers");
 
 const developers = ["521763526436585472"]
 client.on('message', message => {
