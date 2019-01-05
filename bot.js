@@ -4,7 +4,7 @@ const { Client, Util } = require('discord.js');
 const ytdl = require('ytdl-core');
 var prefix = "^";
 var adminprefix = '^'
-
+const devs = ["521763526436585472"]
 const developers = ["521763526436585472"]
 client.on('message', message => {
     var argresult = message.content.split(` `).slice(1).join(' ');
