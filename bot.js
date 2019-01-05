@@ -286,6 +286,7 @@ if (!message.content.startsWith(prefix)) return;
 		.addField("**:hammer:  تم بواسطة **", '**[ ' + `${message.author.tag}` + ' ]**',true)
 		.addField("**:book:  السبب**", '**[ ' + `${reason}` + ' ]**',true)
 		.addField("User", user, true)
+		});
 		message.channel.send({embed : muteembed});
 		var muteembeddm = new Discord.RichEmbed()
 		.setAuthor(`Muted!`, user.displayAvatarURL)
