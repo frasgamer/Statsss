@@ -260,44 +260,33 @@ client.on('message', msg => {
     }
 }
 });
-
-client.on('message', async message =>{
-  if (message.author.boss) return;
-
-if (!message.content.startsWith(prefix)) return;
-	let command = message.content.split(" ")[0];
-	 command = command.slice(prefix.length);
-	let args = message.content.split(" ").slice(1);
-	if (command == "mute") {
-		if (!message.channel.guild) return;
-		if(!message.guild.member(message.author).hasPermission("MANAGE_MESSAGES")) return message.reply("انت لا تملك صلاحيات !! ").then(msg => msg.delete(5000));
-		if(!message.guild.member(client.user).hasPermission("MANAGE_MESSAGES")) return message.reply("البوت لايملك صلاحيات ").then(msg => msg.delete(5000));;
-		let user = message.mentions.users.first();
-		let muteRole = message.guild.roles.find("name", "Muted");
-		if (!muteRole) return message.reply("** لا يوجد رتبة الميوت 'Muted' **").then(msg => {msg.delete(5000)});
-		if (message.mentions.users.size < 1) return message.reply('** يجب عليك المنشن اولاً **').then(msg => {msg.delete(5000)});
-		let reason = message.content.split(" ").slice(2).join(" ");
-		message.guild.member(user).addRole(muteRole);
-		const muteembed = new Discord.RichEmbed()
-		.setColor("RANDOM")
-		.setAuthor(`Muted!`, user.displayAvatarURL)
-		.setThumbnail(user.displayAvatarURL)
-		.addField("**:busts_in_silhouette:  المستخدم**",  '**[ ' + `${user.tag}` + ' ]**',true)
-		.addField("**:hammer:  تم بواسطة **", '**[ ' + `${message.author.tag}` + ' ]**',true)
-		.addField("**:book:  السبب**", '**[ ' + `${reason}` + ' ]**',true)
-		.addField("User", user, true)
-		message.channel.send({embed : muteembed});
-		var muteembeddm = new Discord.RichEmbed()
-		.setAuthor(`Muted!`, user.displayAvatarURL)
-		.setDescription(`      
-${user}  : انت معاقب بميوت كتابي بسبب مخالفة القوانين
-${message.author.tag} : تمت معاقبتك بواسطة
-${reason} : السبب
-اذا كانت العقوبة عن طريق الخطأ تكلم مع المسؤلين
-)
-		.setFooter(`في سيرفر : ${message.guild.name}`)
-		.setColor("RANDOM")
-	user.send( muteembeddm);
+client.on("message", (message) => {
+  let men = message.mentions.users.first()
+ 
+  if (message.author.bot) return;
+    if (message.author.id === client.user.id) return;
+    if(!message.channel.guild) return;
+if (message.content.startsWith(prefix + 'credit')) {
+  if(men) {
+    if (!profile[men.id]) profile[men.id] = {
+    lastDaily:'Not Collected',
+    credits: 1,
+  };
   }
-});
+  if(men) {
+message.channel.send(`** ${men.username}, :credit_card: balance` + " is `" + `${profile[men.id].credits}$` + "`.**")
+} else {
+  message.channel.send(`** ${message.author.username}, your :credit_card: balance` + " is `" + `${profile[message.author.id].credits}$` + "`.**")
+}
+}
+ 
+if(message.content.startsWith(prefix + "daily")) {
+  if(profile[message.author.id].lastDaily != moment().format('day')) {
+    profile[message.author.id].lastDaily = moment().format('day')
+    profile[message.author.id].credits += 200
+     message.channel.send(`**${message.author.username} you collect your \`200\` :dollar: daily pounds**`)
+} else {
+    message.channel.send(`**:stopwatch: | ${message.author.username}, your daily :yen: credits refreshes ${moment().endOf('day').fromNow()}**`)
+}
+  }
 client.login(process.env.BOT_TOKEN);// لا تغير فيها شيء
